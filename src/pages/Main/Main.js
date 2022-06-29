@@ -1,13 +1,108 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View,SafeAreaView,TouchableOpacity, Text, TextInput } from 'react-native';
+import ScrollPicker from 'react-native-wheel-scroll-picker';
 import Bg from '../../../assets/bg-top.svg'
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { Jost_500Medium, Jost_400Regular,Jost_700Bold, Jost_600SemiBold_Italic } from '@expo-google-fonts/jost';
 import styles,{AndroidSafeArea} from './styles';
+import * as math from '../../utils/functions'
 
 const Main = ({ navigation }) => {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [numerator1, setNumerator1] = useState('')
+  const [numerator2, setNumerator2] = useState('')
+  const [denominator1, setDenominator1] = useState('')
+  const [denominator2, setDenominator2] = useState('')
+  const [operator, setOperator] = useState('')
+  const [resultNumerator, setResultNumerator] = useState(0);
+  const [resultDenominator, setResultDenominator] = useState(0);
+
+  const calculateFract = () => {
+
+
+    if (operator == '+'){
+        let data = {
+          numerator1,
+          numerator2,
+          denominator1,
+          denominator2
+        }
+              
+        let response = math.getSome(data)
+
+        if(response.denominator != 'NaN' || response.numerator != 'NaN'){
+          setResultDenominator(parseInt(response.denominator))
+          setResultNumerator(parseInt(response.numerator))
+        }
+        else{
+          setResultDenominator('')
+          setResultNumerator('')
+        }
+        
+
+    }else if(operator == '-'){
+      let data = {
+        numerator1,
+        numerator2,
+        denominator1,
+        denominator2
+      }
+      let response = math.getMinus(data)
+
+      
+      if(response.denominator != 'NaN' || response.numerator != 'NaN'){
+        setResultDenominator(parseInt(response.denominator))
+        setResultNumerator(parseInt(response.numerator))
+      }
+      else{
+        setResultDenominator('')
+        setResultNumerator('')
+      }
+        
+
+    }
+    else if(operator == 'x'){
+      let data = {
+        numerator1,
+        numerator2,
+        denominator1,
+        denominator2
+      }
+      let response = math.getMultiply(data)
+
+      
+      if(response.denominator != 'NaN' || response.numerator != 'NaN'){
+        setResultDenominator(parseInt(response.denominator))
+        setResultNumerator(parseInt(response.numerator))
+      }
+      else{
+        setResultDenominator('')
+        setResultNumerator('')
+      }
+        
+
+    }
+    else if(operator == '/'){
+      let data = {
+        numerator1,
+        numerator2,
+        denominator1,
+        denominator2
+      }
+      let response = math.getDivided(data)
+
+      
+      if(response.denominator != 'NaN' || response.numerator != 'NaN'){
+        setResultNumerator(parseInt(response.numerator))
+        setResultDenominator(parseInt(response.denominator))
+      }
+      else{
+        setResultDenominator('')
+        setResultNumerator('')
+      }
+    }
+  }
   
   useEffect(() => {
     async function prepare() {
@@ -43,6 +138,18 @@ const Main = ({ navigation }) => {
   if (!appIsReady) {
     return null;
   }
+
+  var structure = {
+
+    firstNumerator: numerator1,
+    firstDenominator: denominator1,
+    secondNumerator: numerator2,
+    secondDenominator: denominator2,
+    operator: operator,
+    resultNumerator,
+    resultDenominator,
+  
+  }
   return (
 
     <SafeAreaView style={AndroidSafeArea.AndroidSafeArea} onLayout={onLayoutRootView}>
@@ -51,52 +158,81 @@ const Main = ({ navigation }) => {
         <View style={styles.containerFrac}>
               <View style={styles.containerEsc}>
                 <TextInput style={styles.textInputs}
-                    placeholder="1"
+                    placeholder="0"
                     keyboardType="numeric"
                     placeholderTextColor="#fff"
+                    onChangeText={value => setNumerator1(value)}
+                    selectionColor="#fff"
+                    maxLength={3}
                 />
                 <View style={styles.lineDivisor}></View>
                 <TextInput style={styles.textInputs2}
-                    placeholder="1"
+                    placeholder="0"
                     keyboardType="numeric"
                     placeholderTextColor="#fff"
+                    onChangeText={value => setDenominator1(value)}
+                    selectionColor="#fff"
+                    maxLength={3}
                 />
             </View>
             <View>
             <View style={styles.containerCenter}>
               <View style={styles.containerOperator}>
-                <TextInput style={styles.operatorInput}
-                      placeholder="1"
-                      keyboardType="numbers-and-punctuation"
-                      placeholderTextColor="#1CB279"
-                  />
+
+
+              <ScrollPicker style={styles.operatorInput}
+                  dataSource={[
+                       '+',
+                       '-',
+                       'x',
+                       '/',
+                  ]}
+                  selectedIndex={0}
+                  renderItem={(data, index, isSelected) => {
+                      //
+                  }}
+                  onValueChange={(data, selectedIndex) => {
+                      setOperator(data)
+                  }}
+                  wrapperHeight={50}
+                  wrapperWidth={30}
+                  itemHeight={55}
+                  
+
+                />
               </View>
               </View>
             </View>
             <View style={styles.containerDir}>
                 <TextInput style={styles.textInputs}
-                    placeholder="1"
+                    placeholder="0"
                     keyboardType="numeric"
                     placeholderTextColor="#fff"
+                    onChangeText={value => setNumerator2(value)}
+                    selectionColor="#fff"
+                    maxLength={3}
                 />
                 <View style={styles.lineDivisor}></View>
                 <TextInput style={styles.textInputs2}
-                    placeholder="1"
+                    placeholder="0"
                     keyboardType="numeric"
                     placeholderTextColor="#fff"
+                    onChangeText={value => setDenominator2(value)}
+                    selectionColor="#fff"
+                    maxLength={3}
                 />
             </View>
             
             
             </View>
             <View style={styles.containerResultado}>
-                <Text style={{fontFamily: 'Jost_600SemiBold_Italic', fontSize: 24, color: '#28DF99'}}>Resultado</Text>
-                <Text style={styles.inputResult}></Text>
-
-                
-                <View style={styles.lineDivisor2}></View>
+                <Text style={styles.textResult}>Resultado</Text>
                 <Text style={styles.inputResult}>
-    
+                  {resultNumerator}
+                </Text>
+                <View style={styles.lineDivisor2}/>
+                <Text style={styles.inputResult}>
+                {resultDenominator}
                 </Text>
             </View>
       </View>
@@ -105,9 +241,11 @@ const Main = ({ navigation }) => {
       </View>
       <View style={styles.box}>
       <TouchableOpacity style={[styles.button, styles.button2]}>
-          <Text style={[styles.responsiveText,styles.whiteText]}> RESOLVER FRAÇÃO </Text>
+          <Text style={[styles.responsiveText,styles.whiteText]} onPress={ calculateFract}> RESOLVER FRAÇÃO </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button,styles.buttonLine]} onPress={()=> navigation.navigate('Solution')}>
+        <TouchableOpacity style={[styles.button,styles.buttonLine]} onPress={()=> navigation.navigate('Solution',{
+          paramKey: structure
+        })}>
           <Text style={{color: '#28DF99',fontSize: 20, fontFamily: 'Jost_700Bold'}}> PASSO A PASSO </Text>
         </TouchableOpacity>
       </View>
@@ -115,18 +253,6 @@ const Main = ({ navigation }) => {
     )
 }
 
-const structure = {
-
-  firstNumerator: 1,
-  firstDenominator: 2,
-  secondNumerator: 2,
-  secondDenominator: 5,
-  operator: '+'
-
-}
-const texts = {
-  some: 'Denominadores iguais basta somar os valores'
-}
 
 
 export default Main;

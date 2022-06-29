@@ -6,11 +6,18 @@ import { AntDesign } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { Jost_500Medium, Jost_400Regular,Jost_700Bold, Jost_600SemiBold_Italic } from '@expo-google-fonts/jost';
+import jsonText from '../../utils/texts.json'
 
 
-const Solution = ({navigation}) => {
+const Solution = ({navigation, route}) => {
 
   const [appIsReady, setAppIsReady] = useState(false);
+  const [operatorSolution, setoperatorSolution] = useState('')
+  //const [numerator1, setNumerator1] = useState(route.param.paramKey.numerator1)
+  //const [numerator2, setNumerator2] = useState(route.param.paramKey.numerator2)
+  const [denominator1, setDenominator1] = useState('')
+  const [denominator2, setDenominator2] = useState('')
+  //const [operator, setOperator] = useState('')
   
   useEffect(() => {
     async function prepare() {
@@ -47,7 +54,22 @@ const Solution = ({navigation}) => {
     return null;
   }
 
-
+  if(route.params.paramKey.operator){
+      setDenominator1(route.params.paramKey.denominator1)
+      setDenominator2(route.params.paramKey.denominator2)
+    if (operatorSolution == '+' && denominator1 == denominator2)
+        setoperatorSolution(1)
+    else if(operatorSolution == '+' && denominator1 != denominator2)
+        setoperatorSolution(2)
+    else if(operatorSolution == '-' && denominator1 != denominator2)
+        setoperatorSolution(3)
+    else if(operatorSolution == '-' && denominator1 != denominator2)
+        setoperatorSolution(4) 
+    else if(operatorSolution == 'x' && denominator1 != denominator2)
+        setoperatorSolution(5)
+    else if(operatorSolution == '/' && denominator1 != denominator2)
+        setoperatorSolution(6)
+  }
 
 
   return (
@@ -63,7 +85,13 @@ const Solution = ({navigation}) => {
                 <Text style={styles.responsiveText}> Solução Detalhada</Text>
               </View>
               <View style={styles.middle}>
-
+                  {jsonText.map((id)=>{
+                      if(id == operatorSolution){
+                        return <Text>
+                          teste
+                        </Text>
+                      }
+                  })}
               </View>
               <View style={styles.bottom}>
 

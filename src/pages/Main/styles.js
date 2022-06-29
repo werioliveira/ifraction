@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     button: {
       backgroundColor: '#FFFFFF',
       borderRadius: 15,
-      width: 330,
+      width: '90%',
       height: 60,
       justifyContent: 'center',
       alignItems: 'center'
@@ -50,15 +50,18 @@ const styles = StyleSheet.create({
     button2: {
       backgroundColor: '#28DF99',
       borderRadius: 15,
-      width: 330,
+      width: '90%',
       height: 60,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      borderColor: '#FFFFFF',
+      borderWidth: 1,
     },
     buttonLine: {
       marginTop: 10,
       borderWidth: 1,
-      borderColor: '#28DF99'
+      borderColor: '#28DF99',
+      backgroundColor: 'transparent'
     },
     containerResultado:{
       flex: 1,
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       width: 170,
       alignItems: 'center',
-
+      justifyContent: 'center'
     },
     containerFrac:{
       display: 'flex',
@@ -96,51 +99,53 @@ const styles = StyleSheet.create({
       height: 2,
       backgroundColor: '#28DF99',
     },
+    textResult:{
+      fontFamily: 'Jost_600SemiBold_Italic',
+      fontSize: RFValue(24),
+      color: '#28DF99'
+    },
     textInputs:{
-      fontSize: 24,
+      fontSize: RFValue(24),
       fontFamily: 'Jost_400Regular',
       color: '#FFFFFF',
       width: 100,
       height: 40,
       marginTop: 25,
-      marginLeft: 80
+      textAlign: 'center',
     },
     textInputs2:{
-      fontSize: 24,
+      fontSize: RFValue(24),
       fontFamily: 'Jost_400Regular',
       color: '#FFFFFF',
       width: 100,
       height: 40,
       marginTop: 10,
-      marginLeft: 80
+      textAlign: 'center',
     },
     inputResult:{
-          fontSize: 24,
+          fontSize: RFValue(24),
           fontFamily: 'Jost_400Regular',
           color: '#28DF99',
           width: 100,
           height: 40,
-          marginTop: 10,
-          marginLeft: 80 
+          marginTop: 5,
+          textAlign: 'center',
+          alignItems: 'center',
+          justifyContent: 'center'
     },
     operatorInput:{
-      fontSize: 24,
-      fontFamily: 'Jost_400Regular',
-      color: '#1CB279',
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
+      overflow: 'hidden',
     },
     containerOperator:{
-      width: 50,
-      height: 50,
+      
+      width: 55,
+      height: 55,
       backgroundColor: '#fff',
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
-      textAlign: 'center',
+      paddingBottom: 10,
+      marginTop: 10,
     },
     containerDir:{
       justifyContent: 'center',

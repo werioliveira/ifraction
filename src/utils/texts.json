@@ -1,0 +1,30 @@
+
+[ 
+    {
+        "id": 1,
+        "string": "Soma de frações com denominadores iguais basta somar numerador com numerador e denominador com denominador"
+    
+    },
+    {
+        "id": 2,
+        "string": "Soma de frações com denominadores diferentes é necessário encontrar o minimo multiplo comum"
+    },
+    {
+        "id": 3,
+        "string": "Subtração de frações com denominadores iguais basta somar numerador com numerador e denominador com denominador"
+    },
+    {
+        "id": 4,
+        "string": "Subtração de frações com denominadores diferentes é necessário encontrar o minimo multiplo comum"
+    },
+    {
+        "id": 5,
+        "string": "Multiplicação com denominadores iguais ou diferentes basta multiplicar numerador com numerador e denominador com denominador"
+    }, 
+    {
+        "id": 6,
+        "string": "Na divisão é multiplicado a primeira fração pelo inverso da segunda, é necessário inverter a segunda fração multiplicar"
+    }   
+  
+]
+  
