@@ -12,11 +12,11 @@ import jsonText from '../../utils/texts.json'
 const Solution = ({navigation, route}) => {
 
   const [appIsReady, setAppIsReady] = useState(false);
-  const [operatorSolution, setoperatorSolution] = useState('')
+  const [operatorSolution, setoperatorSolution] = useState(route.params.paramKey.operatorSol)
   //const [numerator1, setNumerator1] = useState(route.param.paramKey.numerator1)
   //const [numerator2, setNumerator2] = useState(route.param.paramKey.numerator2)
-  const [denominator1, setDenominator1] = useState('')
-  const [denominator2, setDenominator2] = useState('')
+  const [denominator1, setDenominator1] = useState(route.params.paramKey.firstDenominator)
+  const [denominator2, setDenominator2] = useState(route.params.paramKey.secondDenominator)
   //const [operator, setOperator] = useState('')
   
   useEffect(() => {
@@ -29,6 +29,7 @@ const Solution = ({navigation, route}) => {
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
         await new Promise(resolve => setTimeout(resolve, 2000));
+
       } catch (e) {
         console.warn(e);
       } finally {
@@ -36,7 +37,22 @@ const Solution = ({navigation, route}) => {
         setAppIsReady(true);
       }
     }
+    function operator(){
+      if (operatorSolution == "+" && denominator1 == denominator2)
+        setoperatorSolution(1)
+      else if(operatorSolution == "+" && denominator1 != denominator2)
+        setoperatorSolution(2)
+      else if(operatorSolution == "-" && denominator1 == denominator2)
+        setoperatorSolution(3)
+      else if(operatorSolution == "-" && denominator1 != denominator2)
+        setoperatorSolution(4) 
+      else if(operatorSolution == "x")
+        setoperatorSolution(5)
+      else if(operatorSolution == "/")
+        setoperatorSolution(6)
+    }
     prepare();
+    operator();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -54,24 +70,6 @@ const Solution = ({navigation, route}) => {
     return null;
   }
 
-  if(route.params.paramKey.operator){
-      setDenominator1(route.params.paramKey.denominator1)
-      setDenominator2(route.params.paramKey.denominator2)
-    if (operatorSolution == '+' && denominator1 == denominator2)
-        setoperatorSolution(1)
-    else if(operatorSolution == '+' && denominator1 != denominator2)
-        setoperatorSolution(2)
-    else if(operatorSolution == '-' && denominator1 != denominator2)
-        setoperatorSolution(3)
-    else if(operatorSolution == '-' && denominator1 != denominator2)
-        setoperatorSolution(4) 
-    else if(operatorSolution == 'x' && denominator1 != denominator2)
-        setoperatorSolution(5)
-    else if(operatorSolution == '/' && denominator1 != denominator2)
-        setoperatorSolution(6)
-  }
-
-
   return (
     <SafeAreaView style={AndroidSafeArea.AndroidSafeArea} onLayout={onLayoutRootView}>
         <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.goBack()}>
@@ -85,13 +83,12 @@ const Solution = ({navigation, route}) => {
                 <Text style={styles.responsiveText}> Solução Detalhada</Text>
               </View>
               <View style={styles.middle}>
-                  {jsonText.map((id)=>{
-                      if(id == operatorSolution){
-                        return <Text>
-                          teste
-                        </Text>
-                      }
-                  })}
+                
+                {jsonText.map((data, keys)=>{
+                  if(data.id == operatorSolution){
+                    return <Text key={keys}>{data.string}</Text>
+                  }
+                })}
               </View>
               <View style={styles.bottom}>
 

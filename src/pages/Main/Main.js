@@ -145,7 +145,7 @@ const Main = ({ navigation }) => {
     firstDenominator: denominator1,
     secondNumerator: numerator2,
     secondDenominator: denominator2,
-    operator: operator,
+    operatorSol: operator,
     resultNumerator,
     resultDenominator,
   
@@ -187,12 +187,12 @@ const Main = ({ navigation }) => {
                        'x',
                        '/',
                   ]}
-                  selectedIndex={0}
+                  selectedIndex={-1}
                   renderItem={(data, index, isSelected) => {
                       //
                   }}
                   onValueChange={(data, selectedIndex) => {
-                      setOperator(data)
+                    setOperator(data)
                   }}
                   wrapperHeight={50}
                   wrapperWidth={30}
@@ -240,8 +240,8 @@ const Main = ({ navigation }) => {
 
       </View>
       <View style={styles.box}>
-      <TouchableOpacity style={[styles.button, styles.button2]}>
-          <Text style={[styles.responsiveText,styles.whiteText]} onPress={ calculateFract}> RESOLVER FRAÇÃO </Text>
+      <TouchableOpacity style={[styles.button, styles.button2]} onPress={ calculateFract}>
+          <Text style={[styles.responsiveText,styles.whiteText]} > RESOLVER FRAÇÃO </Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button,styles.buttonLine]} onPress={()=> navigation.navigate('Solution',{
           paramKey: structure
