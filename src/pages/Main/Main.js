@@ -232,7 +232,7 @@ const Main = ({ navigation }) => {
                 </Text>
                 <View style={styles.lineDivisor2}/>
                 <Text style={styles.inputResult}>
-                {resultDenominator}
+                {isNaN(resultDenominator) ? '' : resultDenominator }
                 </Text>
             </View>
       </View>

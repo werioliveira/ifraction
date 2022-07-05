@@ -11,19 +11,20 @@ const styles = StyleSheet.create({
       bottom: 0,
     },
     top: {
-      flex: 2,
-      borderWidth: 2,
-      borderColor: '#fafefe'
+      flex: 1.25,
+      //borderWidth: 2,
+      //borderColor: '#fafefe'
     },
     middle: {
-      flex: 1,
-      borderWidth: 2,
-      borderColor: '#fafe'
+      flex: 2,
+      //borderWidth: 2,
+      //borderColor: '#fafe'
+      marginHorizontal: 10,
     },
     bottom:{
-      flex: 1,
-      borderWidth: 2,
-      borderColor: 'red'
+      flex: 0.75,
+     // borderWidth: 2,
+      //borderColor: 'red'
     },
     backbutton: {
       display: 'flex',
@@ -45,7 +46,16 @@ const styles = StyleSheet.create({
     iconContainer: {
       flexDirection: 'row',
       alignItems: 'center'
-    }
+    },
+    lineDivisor:{
+      width: 30,
+      height: 2,
+      backgroundColor: '#fff',
+    },
+    containerDir:{
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 })
 export default styles
 export const AndroidSafeArea = StyleSheet.create({
