@@ -5,7 +5,6 @@ import Logo from '../../../assets/logo.svg'
 import styles, { AndroidSafeArea } from './styles'
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { Jost_500Medium, Jost_400Regular,Jost_700Bold } from '@expo-google-fonts/jost';
 
 const Home = ({ navigation }) => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -16,10 +15,15 @@ const Home = ({ navigation }) => {
         // Keep the splash screen visible while we fetch resources
         await SplashScreen.preventAutoHideAsync();
         // Pre-load fonts, make any API calls you need to do here
-        await Font.loadAsync({Jost_400Regular,Jost_500Medium,Jost_700Bold});
+        await Font.loadAsync({
+          'Jost_400Regular': require('../../../assets/fonts/Jost-Regular.ttf'),
+          'Jost_500Medium': require('../../../assets/fonts/Jost-Medium.ttf'),
+          'Jost_700Bold': require('../../../assets/fonts/Jost-Bold.ttf'),
+          'Jost_600SemiBold_Italic': require('../../../assets/fonts/Jost-SemiBoldItalic.ttf'),
+        });
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        //await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -48,7 +52,7 @@ const Home = ({ navigation }) => {
   
     return (
         <SafeAreaView style={AndroidSafeArea.AndroidSafeArea} onLayout={onLayoutRootView}>
-          <Bg style={styles.bg}/>
+          <Bg style={[styles.bg,{width: Dimensions.get('screen').width}]}/>
           <View style={styles.container}>
                     
             <View style={styles.top}>

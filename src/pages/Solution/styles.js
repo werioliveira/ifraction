@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       alignItems: 'center',
     },
+    spaceTop:{
+      marginTop: 30,
+    },
     responsiveText: {
       fontSize: RFValue(20),
       color: '#fff',
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     lineDivisor:{
-      width: 30,
+      width: 80,
       height: 2,
       backgroundColor: '#fff',
     },

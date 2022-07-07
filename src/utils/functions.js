@@ -1,5 +1,5 @@
 import fc from "fraction-calculator";
-
+fc.DISABLE_REDUCE = true;
 
 export function getSome(data){
     let response = {}

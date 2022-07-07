@@ -1,25 +1,69 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View,SafeAreaView,TouchableOpacity, Text, TextInput } from 'react-native';
-import ScrollPicker from 'react-native-wheel-scroll-picker';
+import { View,SafeAreaView,TouchableOpacity, Text, TextInput, Alert, Dimensions } from 'react-native';
+import ScrollPicker from 'react-native-picker-scrollview';
 import Bg from '../../../assets/bg-top.svg'
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { Jost_500Medium, Jost_400Regular,Jost_700Bold, Jost_600SemiBold_Italic } from '@expo-google-fonts/jost';
 import styles,{AndroidSafeArea} from './styles';
 import * as math from '../../utils/functions'
+import * as Yup from 'yup'
 
 const Main = ({ navigation }) => {
   const [appIsReady, setAppIsReady] = useState(false);
-  const [numerator1, setNumerator1] = useState('')
-  const [numerator2, setNumerator2] = useState('')
-  const [denominator1, setDenominator1] = useState('')
-  const [denominator2, setDenominator2] = useState('')
-  const [operator, setOperator] = useState('')
-  const [resultNumerator, setResultNumerator] = useState(0);
-  const [resultDenominator, setResultDenominator] = useState(0);
+  const [numerator1, setNumerator1] = useState(null)
+  const [numerator2, setNumerator2] = useState(null)
+  const [denominator1, setDenominator1] = useState(null)
+  const [denominator2, setDenominator2] = useState(null)
+  const [operator, setOperator] = useState('+')
+  const [resultNumerator, setResultNumerator] = useState(null);
+  const [resultDenominator, setResultDenominator] = useState(null);
 
-  const calculateFract = () => {
 
+  async function validateField(){
+    try {
+      const schema = Yup.object().shape({
+        numerator1: Yup.number()
+        .typeError('Numerador obrigatório')
+        .required("Numerador obrigatório").max(999),
+        numerator2: Yup.number()
+        .typeError('Numerador obrigatório')
+        .required("Numerador obrigatório").max(999),
+        denominator1: Yup.number()
+        .typeError('Denominador obrigatório')
+        .required("Denominador obrigatório").max(999),
+        denominator2: Yup.number()
+        .typeError('Denominador obrigatório')
+        .required("Denominador obrigatório").max(999)
+      })
+      await schema.validate({numerator1,numerator2,denominator1,denominator2})
+      calculateFract()
+    } catch (error) {
+      if(error instanceof Yup.ValidationError){
+        Alert.alert(error.message)
+
+      }
+        
+    }
+  }
+  async function validateResult(){
+    try {
+      const schema = Yup.object().shape({
+        resultNumerator: Yup.number()
+        .typeError('Resolva a fração primeiro')
+        .required("Resolva a fração primeiro"),
+      })
+      await schema.validate({resultNumerator})
+      navigation.navigate('Solution',{
+        paramKey: structure
+      })
+    } catch (error) {
+      if(error instanceof Yup.ValidationError){
+        Alert.alert(error.message)
+      }
+        
+    }
+  }
+  function calculateFract() {
 
     if (operator == '+'){
         let data = {
@@ -110,10 +154,16 @@ const Main = ({ navigation }) => {
         // Keep the splash screen visible while we fetch resources
         await SplashScreen.preventAutoHideAsync();
         // Pre-load fonts, make any API calls you need to do here
-        await Font.loadAsync({Jost_400Regular,Jost_500Medium,Jost_700Bold,Jost_600SemiBold_Italic});
+        await Font.loadAsync({
+          'Jost_400Regular': require('../../../assets/fonts/Jost-Regular.ttf'),
+          'Jost_500Medium': require('../../../assets/fonts/Jost-Medium.ttf'),
+          'Jost_700Bold': require('../../../assets/fonts/Jost-Bold.ttf'),
+          'Jost_600SemiBold_Italic': require('../../../assets/fonts/Jost-SemiBoldItalic.ttf'),
+        });
         // Artificially delay for two seconds to simulate a slow loading
+        
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        //await new Promise(resolve => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -138,7 +188,6 @@ const Main = ({ navigation }) => {
   if (!appIsReady) {
     return null;
   }
-
   var structure = {
 
     firstNumerator: numerator1,
@@ -153,8 +202,9 @@ const Main = ({ navigation }) => {
   return (
 
     <SafeAreaView style={AndroidSafeArea.AndroidSafeArea} onLayout={onLayoutRootView}>
-      <Bg style={styles.bg}/>
+      <Bg style={[styles.bg,{width: Dimensions.get('screen').width}]}/>
       <View style={styles.top}>
+        
         <View style={styles.containerFrac}>
               <View style={styles.containerEsc}>
                 <TextInput style={styles.textInputs}
@@ -178,28 +228,34 @@ const Main = ({ navigation }) => {
             <View>
             <View style={styles.containerCenter}>
               <View style={styles.containerOperator}>
-
-
-              <ScrollPicker style={styles.operatorInput}
+              <ScrollPicker
+ 
                   dataSource={[
-                       '+',
-                       '-',
-                       'x',
-                       '/',
+                      '+',
+                      '-',
+                      'x',
+                      '/',
                   ]}
-                  selectedIndex={-1}
+                  selectedIndex={0}
+                  itemHeight={60}
+                  wrapperHeight={60}
+                  wrapperColor={'#ffffff'}
+                  highlightColor={'#d8d8d8'}
                   renderItem={(data, index, isSelected) => {
-                      //
+                    
+                      return(
+                        
+                          <View>
+                              <Text >{data}</Text>
+                          </View>
+                      )
                   }}
                   onValueChange={(data, selectedIndex) => {
-                    setOperator(data)
+                      setOperator(data)
                   }}
-                  wrapperHeight={50}
-                  wrapperWidth={30}
-                  itemHeight={55}
-                  
-
-                />
+                  />
+              
+              
               </View>
               </View>
             </View>
@@ -240,13 +296,11 @@ const Main = ({ navigation }) => {
 
       </View>
       <View style={styles.box}>
-      <TouchableOpacity style={[styles.button, styles.button2]} onPress={ calculateFract}>
+      <TouchableOpacity style={[styles.button, styles.button2]} onPress={ validateField }>
           <Text style={[styles.responsiveText,styles.whiteText]} > RESOLVER FRAÇÃO </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button,styles.buttonLine]} onPress={()=> navigation.navigate('Solution',{
-          paramKey: structure
-        })}>
-          <Text style={{color: '#28DF99',fontSize: 20, fontFamily: 'Jost_700Bold'}}> PASSO A PASSO </Text>
+        <TouchableOpacity style={[styles.button,styles.buttonLine]} onPress={validateResult }>
+           <Text style={{color: '#28DF99',fontSize: 20, fontFamily: 'Jost_700Bold'}}> PASSO A PASSO </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

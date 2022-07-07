@@ -5,10 +5,10 @@ import styles, {AndroidSafeArea} from './styles';
 import { AntDesign } from '@expo/vector-icons'; 
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import { Jost_500Medium, Jost_400Regular,Jost_700Bold, Jost_600SemiBold_Italic } from '@expo-google-fonts/jost';
-import jsonText from '../../utils/texts.json'
-import * as solve from '../../utils/solution'
-
+import Soma from '../../components/soma';
+import Subtracao from '../../components/subtracao';
+import Multiplicacao from '../../components/multiplicacao';
+import Divisao from '../../components/divisao';
 
 const Solution = ({navigation, route}) => {
 
@@ -20,11 +20,8 @@ const Solution = ({navigation, route}) => {
   const [denominator2, setDenominator2] = useState(route.params.paramKey.secondDenominator)
   const [resultNumerator, setResultNumerator] = useState(route.params.paramKey.resultNumerator)
   const [resultDenominator, setResultDenominator] = useState(route.params.paramKey.resultDenominator)
-  const [some, setSome] = useState({})
-  const [substract, setSubstract] = useState({})
-  const [mult, setMult] = useState({})
-  const [division, setDivision] = useState({})
   const [operator, setOperator] = useState('')
+  const [dataProp, setData] = useState({})
   
   useEffect(() => {
     async function prepare() {
@@ -32,10 +29,15 @@ const Solution = ({navigation, route}) => {
         // Keep the splash screen visible while we fetch resources
         await SplashScreen.preventAutoHideAsync();
         // Pre-load fonts, make any API calls you need to do here
-        await Font.loadAsync({Jost_400Regular,Jost_500Medium,Jost_700Bold,Jost_600SemiBold_Italic});
+        await Font.loadAsync({
+          'Jost_400Regular': require('../../../assets/fonts/Jost-Regular.ttf'),
+          'Jost_500Medium': require('../../../assets/fonts/Jost-Medium.ttf'),
+          'Jost_700Bold': require('../../../assets/fonts/Jost-Bold.ttf'),
+          'Jost_600SemiBold_Italic': require('../../../assets/fonts/Jost-SemiBoldItalic.ttf'),
+        });
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        //await new Promise(resolve => setTimeout(resolve, 2000));
 
       } catch (e) {
         console.warn(e);
@@ -54,22 +56,19 @@ const Solution = ({navigation, route}) => {
         resultNumerator
       }
       if (operatorSolution == "+"){
-        setSome(solve.some(data))
+        setData(data)
         setOperator('Soma')
       }
-        
       else if(operatorSolution == "-"){
-        setSubstract(solve.substract(data))
+        setData(data)
         setOperator('Subtração')
       }
-        
       else if(operatorSolution == "x"){
-        setMult(solve.mult(data))
+        setData(data)
         setOperator('Multiplicação')
       }
-        
       else if(operatorSolution == "/"){
-        setDivision(solve.division(data))
+        setData(data)
         setOperator('Divisão')
       }
         
@@ -144,44 +143,31 @@ const Solution = ({navigation, route}) => {
                 </View>
               </View>
               <View style={styles.middle}>
-                {operatorSolution == '+' ? 
-                <View>
-                                  <Text>{some.step1}</Text>
-                                  <Text>{some.step2}</Text>
-                                  <Text>{some?.step3}</Text>
-                                  <Text>{some?.step4}</Text>
-                                  <Text>{some?.lastStep}</Text>   
-                </View>
-  
-                : operatorSolution == '-' ?
-
-                <View>
-                                  <Text>{substract.step1}</Text>
-                                  <Text>{substract.step2}</Text>
-                                  <Text>{substract?.step3}</Text>
-                                  <Text>{substract?.step4}</Text>
-                                  <Text>{substract?.lastStep}</Text>   
-                </View>
-                : operatorSolution == 'x' ?
-                <View>
-                                  <Text>{mult.step1}</Text>
-                                  <Text>{mult.step2}</Text>
-                                  <Text>{mult?.step3}</Text>
-                                  <Text>{mult?.step4}</Text>
-                                  <Text>{mult?.lastStep}</Text>   
-                </View>
-                :
-                <View>
-                                  <Text>{division.step1}</Text>
-                                  <Text>{division.step2}</Text>
-                                  <Text>{division?.step3}</Text>
-                                  <Text>{division?.step4}</Text>
-                                  <Text>{division?.lastStep}</Text>   
-                </View>
-
-                }
+                <View style={styles.spaceTop}>
 
 
+                    {operatorSolution == '+' ? 
+                    <View>
+                        <Soma props={dataProp}/>
+                    </View>
+      
+                    : operatorSolution == '-' ?
+
+                    <View>
+                        <Subtracao props={dataProp}/>
+                    </View>
+                    : operatorSolution == 'x' ?
+                    <View>
+                      <Multiplicacao props={dataProp}/>
+                    </View>
+                    :
+                    <View>
+                      <Divisao props={dataProp}/>  
+                    </View>
+
+                    }
+
+              </View>
               </View>
               <View style={styles.bottom}>
 
