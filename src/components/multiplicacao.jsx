@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import styles from './styles';
 
 function Multiplicacao({props}) {
@@ -9,13 +9,15 @@ function Multiplicacao({props}) {
         step1: `Multiplique o numerador ${props.numerator1} com o numerador ${props.numerator2}`,
         step2: `Em seguida multiplique o denominador ${props.denominator1} pelo denominador ${props.denominator2}`,
     }
-    if (isNaN(props.resultDenominator && props.resultNumerator == '1'))
+    if (isNaN(props.resultDenominator))
         steps = {...steps, lastStep}
 
   return (
     <>
         <Text style={styles.textSolution}>{steps.step1}</Text>
+        <View style={styles.divisor}/>
         <Text style={styles.textSolution}>{steps.step2}</Text>
+        <View style={styles.divisor}/>
         <Text style={styles.textSolution}>{steps?.lastStep}</Text>   
     </>
   );

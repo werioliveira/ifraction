@@ -20,7 +20,7 @@ function Soma({props}) {
             step4: `Para finalizar some o resultado da multiplicação dos numeradores que resultará no numerador ${props.resultNumerator}`
         }        
     }
-    if (isNaN(props.resultDenominator && props.resultNumerator == '1')){
+    if (isNaN(props.resultDenominator)){
         steps = {...steps, lastStep}
     }
 

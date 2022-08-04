@@ -214,6 +214,7 @@ const Main = ({ navigation }) => {
                     onChangeText={value => setNumerator1(value)}
                     selectionColor="#fff"
                     maxLength={3}
+                    autoComplete={'off'} 
                 />
                 <View style={styles.lineDivisor}></View>
                 <TextInput style={styles.textInputs2}
@@ -223,6 +224,7 @@ const Main = ({ navigation }) => {
                     onChangeText={value => setDenominator1(value)}
                     selectionColor="#fff"
                     maxLength={3}
+                    autoComplete={'off'}  
                 />
             </View>
             <View>
@@ -267,6 +269,7 @@ const Main = ({ navigation }) => {
                     onChangeText={value => setNumerator2(value)}
                     selectionColor="#fff"
                     maxLength={3}
+                    autoComplete={'off'}  
                 />
                 <View style={styles.lineDivisor}></View>
                 <TextInput style={styles.textInputs2}
@@ -276,6 +279,7 @@ const Main = ({ navigation }) => {
                     onChangeText={value => setDenominator2(value)}
                     selectionColor="#fff"
                     maxLength={3}
+                    autoComplete={'off'} 
                 />
             </View>
             

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import styles from './styles';
 
 function Subtracao({props}) {
@@ -19,15 +19,25 @@ function Subtracao({props}) {
             step4: `Para finalizar subtraia o resultado da multiplicação dos numeradores que resultará no numerador ${props.resultNumerator}`
         }        
     }
-    if (isNaN(props.resultDenominator && props.resultNumerator == '1'))
+    if (isNaN(props.resultDenominator))
         steps = {...steps, lastStep}
 
   return (
     <>
         <Text style={styles.textSolution}>{steps.step1}</Text>
+        <View style={styles.divisor}/>
         <Text style={styles.textSolution}>{steps.step2}</Text>
-        <Text style={styles.textSolution}>{steps?.step3}</Text>
-        <Text style={styles.textSolution}>{steps?.step4}</Text>
+        <View style={styles.divisor}/>
+        {steps?.step3 ?
+                <View>
+                    <Text style={styles.textSolution}>{steps?.step3}</Text>
+                    <View style={styles.divisor}/>
+                    <Text style={styles.textSolution}>{steps?.step4}</Text>
+                    <View style={styles.divisor}/>
+                </View>
+                :
+                 <Text></Text>
+                }
         <Text style={styles.textSolution}>{steps?.lastStep}</Text>   
     </>
   );

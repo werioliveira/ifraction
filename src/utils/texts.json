@@ -2,7 +2,12 @@
 [ 
     {
         "id": 1,
-        "string": "Soma de frações com denominadores iguais basta somar numerador com numerador e denominador com denominador"
+        "string": ["Soma de frações com denominadores iguais basta somar numerador com numerador e denominador com denominador",
+            "Some o numerador %d com o numerador %d",
+            "Em seguida some o denominador %d com o denominador %d"
+        ]
+        
+
     
     },
     {

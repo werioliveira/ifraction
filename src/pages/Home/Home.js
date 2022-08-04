@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, SafeAreaView, Text,TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, Text,TouchableOpacity, Dimensions } from 'react-native';
 import Bg from '../../../assets/bg.svg'
 import Logo from '../../../assets/logo.svg'
 import styles, { AndroidSafeArea } from './styles'
